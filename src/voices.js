@@ -1,29 +1,15 @@
 /**
- * ElevenLabs voice_id values for the dropdown. Edit labels to match names in your library.
+ * ElevenLabs voice_id values for the dropdown.
+ * Labels are the given names from the confirmed ElevenLabs voice names.
  */
-const IDS = [
-  "Astm9kBg2GoJpvmLehN0",
-  "9B6qQdh3qf1JUYTPPqV7",
-  "YzYhZnqss746aWqRJC9H",
-  "XCwC1YU8b4SGMtnX5Qwr",
-  "psS9TrEzDPCk10harX8d",
-  "vqmq3bd63istIYHZxsYV",
-  "QrwRvbpswBgwmOulozTX",
-  "loJfO8jlTj6khCTCwavv",
-  "Ek1n0msUbTIdejEKyNMW",
-  "266TYS22fdxXLTfICz7W",
-  "Uo7HdPMCyPjRirKwQKtd",
-  "YFPFGVR1mImNYR9wDTpM",
-  "0F814WpHip5Wll1X8d5d",
-  "ZtkBZMkcwNBEP6zu1N7K",
-  "E7HyWrwFtIWIOHyBnzr3",
-  "cyy2EulTZZtaeMqQob9M",
+export const VOICES = [
+  { id: "gvZnsMf2ez10c4GS6NEG", originalName: "PZU Anna 2026-09-28", label: "Anna" },
+  { id: "KFsrGZLHdOb4KU5VLtEG", originalName: "PZU Katarzyna 2026-09-28", label: "Katarzyna" },
+  { id: "ZNZcZk2Qc52fJnkErnjV", originalName: "PZU Joanna 2026-09-28", label: "Joanna" },
+  { id: "dnxdfPLwInLG37jeY9MB", originalName: "PZU Ewa 2026-09-28", label: "Ewa" },
+  { id: "JWO7XlYj8H3D3bH4XoX1", originalName: "PZU Tomasz 2026-09-28", label: "Tomasz" },
+  { id: "Rn1Q8Iyh7s4QK9w0zS3p", originalName: "PZU Piotr 2026-09-28", label: "Piotr" },
+  { id: "kPw7f3uUG3mGYs5QwbNj", originalName: "PZU Andrzej 2026-09-28", label: "Andrzej" },
+  { id: "F6nmLIJeztREyEvlnrnh", originalName: "PZU Jakub 2026-09-28", label: "Jakub" },
+  { id: "xbzGfAljNoKejwo67t06", originalName: null, label: "Kamil" },
 ];
-
-function shortLabel(id, index) {
-  const n = String(index + 1).padStart(2, "0");
-  const hint = id.length > 14 ? `${id.slice(0, 14)}…` : id;
-  return `Voice ${n} · ${hint}`;
-}
-
-export const VOICES = IDS.map((id, i) => ({ id, label: shortLabel(id, i) }));

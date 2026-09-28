@@ -2,15 +2,15 @@ import { Conversation } from "@elevenlabs/client";
 import { VOICES } from "./voices.js";
 import "./styles.css";
 
-const AGENT_ID = "agent_2401kpdcfbczeznsr4bkmr97c7p1";
+const AGENT_ID = "agent_3501m3myk9t7e6jbn9mg1xdxt416";
 const BRANCH_ID =
   import.meta.env.VITE_BRANCH_ID === "false"
     ? ""
-    : (import.meta.env.VITE_BRANCH_ID ?? "agtbrch_7601kpdcfd0de3prknkcrzz1z04f");
+    : (import.meta.env.VITE_BRANCH_ID ?? "agtbrch_9601m3mykb36fb5bdrj99t1h4xfb");
 
 const CONVAI_TOKEN_SOURCE = "js_sdk";
 const CONVAI_TOKEN_VERSION = "1.2.1";
-const PROMPT_STORAGE_KEY = "elevenlabs-voice-test:system-prompt-draft";
+const PROMPT_STORAGE_KEY = "elevenlabs-voice-test:system-prompt-draft:pl";
 
 const voiceSelect = document.getElementById("voiceSelect");
 const systemPrompt = document.getElementById("systemPrompt");
@@ -68,16 +68,16 @@ function showError(msg) {
 
 function parseTokenResponse(text, httpStatus) {
   if (!text) {
-    throw new Error(`Token HTTP ${httpStatus}`);
+    throw new Error(`Błąd tokenu HTTP ${httpStatus}`);
   }
   let data;
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error(text.slice(0, 200) || `Token HTTP ${httpStatus}`);
+      throw new Error(text.slice(0, 200) || `Błąd tokenu HTTP ${httpStatus}`);
   }
   if (!data.token) {
-    throw new Error("API response is missing the token field");
+    throw new Error("Odpowiedź API nie zawiera pola token");
   }
   return data.token;
 }
@@ -93,7 +93,7 @@ async function fetchConversationTokenFromDevServer() {
     } catch {
       /* raw text */
     }
-    throw new Error(detail || `Token HTTP ${res.status}`);
+    throw new Error(detail || `Błąd tokenu HTTP ${res.status}`);
   }
   return parseTokenResponse(text, res.status);
 }
@@ -117,7 +117,7 @@ async function fetchConversationTokenFromBrowser() {
     } catch {
       /* raw text */
     }
-    throw new Error(detail || `Token HTTP ${res.status}`);
+    throw new Error(detail || `Błąd tokenu HTTP ${res.status}`);
   }
   return parseTokenResponse(text, res.status);
 }
@@ -129,7 +129,7 @@ function isGitHubPagesHost() {
 function buildCallbacks() {
   return {
     onConnect: () => {
-      connStatus.textContent = "Connected";
+      connStatus.textContent = "Połączono";
       stopBtn.disabled = false;
       voiceSelect.disabled = true;
       systemPrompt.disabled = true;
@@ -137,7 +137,7 @@ function buildCallbacks() {
       setCallUi("active");
     },
     onDisconnect: () => {
-      connStatus.textContent = "Disconnected";
+      connStatus.textContent = "Rozłączono";
       startBtn.disabled = false;
       stopBtn.disabled = true;
       modeStatus.textContent = "—";
@@ -152,10 +152,10 @@ function buildCallbacks() {
       showError(typeof err === "string" ? err : err?.message || String(err));
     },
     onModeChange: ({ mode }) => {
-      modeStatus.textContent = mode === "speaking" ? "Speaking" : "Listening";
+      modeStatus.textContent = mode === "speaking" ? "Mówi" : "Słucha";
       if (callSurface?.dataset.state === "active" && modeLine) {
         modeLine.textContent =
-          mode === "speaking" ? "Agent is speaking — wait for your turn." : "Listening — go ahead and talk.";
+          mode === "speaking" ? "Agent mówi — poczekaj na swoją kolej." : "Słucham — możesz mówić.";
       }
     },
   };
@@ -166,14 +166,14 @@ function setCallUi(state) {
   callSurface.dataset.state = state;
   if (!callLabel || !modeLine) return;
   if (state === "idle") {
-    callLabel.textContent = "Ready to connect";
-    modeLine.textContent = "Microphone access is requested when you start.";
+    callLabel.textContent = "Gotowy do połączenia";
+    modeLine.textContent = "Przy starcie poprosimy o dostęp do mikrofonu.";
   } else if (state === "connecting") {
-    callLabel.textContent = "Connecting…";
-    modeLine.textContent = "Grant microphone access if the browser asks.";
+    callLabel.textContent = "Łączenie…";
+    modeLine.textContent = "Jeśli przeglądarka zapyta, zezwól na mikrofon.";
   } else if (state === "active") {
-    callLabel.textContent = "Live session";
-    modeLine.textContent = "Speak naturally — the agent follows the system prompt on the left.";
+    callLabel.textContent = "Sesja na żywo";
+    modeLine.textContent = "Mów naturalnie — agent trzyma się promptu systemowego po lewej.";
   }
 }
 
