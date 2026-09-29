@@ -10,7 +10,7 @@ const BRANCH_ID =
 
 const CONVAI_TOKEN_SOURCE = "js_sdk";
 const CONVAI_TOKEN_VERSION = "1.2.1";
-const PROMPT_STORAGE_KEY = "elevenlabs-voice-test:system-prompt-draft:pl";
+const PROMPT_STORAGE_KEY = "elevenlabs-voice-test:system-prompt-draft:pl:2";
 
 const voiceSelect = document.getElementById("voiceSelect");
 const systemPrompt = document.getElementById("systemPrompt");
